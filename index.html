@@ -4,53 +4,106 @@
     <meta charset="UTF-8" />
     <title>Tic Tac Toe Game</title>
     <link rel="stylesheet" href="style.css" />
+
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
+    <script
+      src="https://kit.fontawesome.com/7213b39e3a.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <!-- select box -->
     <div class="select-box">
-      <header>Tic Tac Toe</header>
+      <div class="header">
+        <header>Tic Tac Toe</header>
+        <div class="setting">
+          <i class="homeSound fa-solid"></i>
+          <!-- <i class="fa-solid fa-volume-high"></i> -->
+        </div>
+      </div>
       <div class="content">
         <div class="title">Select game mode?</div>
         <div class="options">
-          <button class="mode singlePlay active">Single play</button>
-          <button class="mode multiPlay">Multi play</button>
+          <button class="mode singlePlay active">Play vs bot</button>
+          <button class="mode multiPlay">Play vs friend</button>
+          <button class="mode onlinePlay">Play Online</button>
         </div>
-        <div class="title">Select a player?</div>
         <div class="options">
-          <button class="turn playerX">Player (X)</button>
-          <button class="turn playerO">Player (O)</button>
+          <div class="singlePlayDashboard active">
+            <div>
+              <p class="small gray">Level</p>
+              <select class="level">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <div>
+              <p class="small gray">Player</p>
+              <select class="player">
+                <option value="X">Player - X</option>
+                <option value="O">Player - O</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <p class="small gray">Board</p>
+            <select class="board">
+              <option value="3">3x3 (classic)</option>
+              <option value="5">5x5 - Align 4 to win</option>
+            </select>
+          </div>
+        </div>
+        <small class="helperText active"
+          >Hint: Select X if you wanna go first
+        </small>
+
+        <div class="options active">
+          <button class="start">Start</button>
+        </div>
+        <div class="credit">
+          Created By
+          <a href="https://hashmat-noorani.vercel.app/" target="_blank"
+            >Hashmat Wani</a
+          >
         </div>
       </div>
     </div>
 
     <!-- playboard section -->
     <div class="play-board">
+      <div class="header">
+        <header>Tic Tac Toe</header>
+        <div class="setting">
+          <i class="playBoardSound fa-solid"></i>
+          <button class="quit">Quit</button>
+          <!-- <i class="fa-solid fa-volume-high"></i> -->
+        </div>
+      </div>
       <div class="details">
         <div class="players">
-          <span class="Xturn">X's Turn</span>
-          <span class="Oturn">O's Turn</span>
-          <div class="slider"></div>
+          <span class="xTurn active">X's Turn</span>
+          <span class="oTurn">O's Turn</span>
+          <!-- <div class="slider active"></div> -->
         </div>
       </div>
       <div class="play-area">
         <section>
-          <span class="box1"></span>
-          <span class="box2"></span>
-          <span class="box3"></span>
+          <span class="box1" id="0"></span>
+          <span class="box2" id="1"></span>
+          <span class="box3" id="2"></span>
         </section>
         <section>
-          <span class="box4"></span>
-          <span class="box5"></span>
-          <span class="box6"></span>
+          <span class="box4" id="3"></span>
+          <span class="box5" id="4"></span>
+          <span class="box6" id="5"></span>
         </section>
         <section>
-          <span class="box7"></span>
-          <span class="box8"></span>
-          <span class="box9"></span>
+          <span class="box7" id="6"></span>
+          <span class="box8" id="7"></span>
+          <span class="box9" id="8"></span>
         </section>
       </div>
     </div>
@@ -59,6 +112,11 @@
     <div class="result-box">
       <div class="won-text"></div>
       <div class="btn"><button>Replay</button></div>
+    </div>
+
+    <div class="coming">
+      <div>Coming soon</div>
+      <span class="material-icons close">close</span>
     </div>
 
     <script src="script.js"></script>

@@ -1,4 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+/* .wrapper {
+  margin: 0 auto;
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px 20px;
+  width: 400px;
+}
+
+.container {
+  width: 100%;
+} */
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +30,8 @@ body {
 }
 .select-box,
 .play-board,
-.result-box {
+.result-box,
+.coming {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -22,58 +39,79 @@ body {
   transition: all 0.3s ease;
 }
 .select-box {
+  /* border: 1px solid red; */
   background: #fff;
   padding: 20px 25px 25px;
   border-radius: 5px;
   max-width: 400px;
-  width: 100%;
+  width: calc(100% - 20px);
   opacity: 1;
 }
 .select-box.hide {
+  /* background-color: #56baed; */
   opacity: 0;
   pointer-events: none;
 }
-.select-box header {
-  font-size: 30px;
-  font-weight: 600;
-  padding-bottom: 10px;
-  border-bottom: 1px solid lightgrey;
+.select-box .content.hide {
 }
+
 .select-box .title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  margin: 20px 0;
+  margin: 20px 0 -15px;
 }
 .select-box .options {
   display: flex;
   width: 100%;
-  column-gap: 15px;
+  column-gap: 5px;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-size: 13px;
 }
-.options {
+
+/* .select-box .options > div {
+  border: 1px solid red;
+} */
+
+.select-box .options > div:first-child {
+  display: none;
+}
+.select-box .options > div:first-child.active {
+  /* border: 1px solid blue; */
+  display: block;
   display: flex;
+  justify-content: space-between;
+  column-gap: 7px;
 }
+
+.select-box .credit {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.select-box .credit a {
+  color: #56baed;
+  text-decoration: none;
+}
+.select-box .credit a:hover {
+  text-decoration: underline;
+}
+
 .options button,
-.btn button {
+.options select {
   width: 100%;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   border-radius: 5px;
   outline: none;
   cursor: pointer;
-  padding: 10px 0;
+  padding: 6px 3px;
   background: none;
   border: 1px solid #56baed;
   color: #56baed;
+  margin-top: 5px;
   transition: all 0.3s ease;
-}
-
-.options button {
-  /* width: 100%; */
-  font-size: 15px;
-  padding: 8px 0;
-  background: none;
-  border: 1px solid #56baed;
-  color: #56baed;
 }
 
 .options button:hover,
@@ -87,6 +125,7 @@ body {
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -50%) scale(0.9);
+  /* border: 1px solid red; */
 }
 .play-board.show {
   opacity: 1;
@@ -94,7 +133,6 @@ body {
   transform: translate(-50%, -50%) scale(1);
 }
 .play-board .details {
-  border: 1px solid red;
   padding: 7px;
   border-radius: 5px;
   background: #fff;
@@ -104,11 +142,9 @@ body {
   display: flex;
   position: relative;
   justify-content: space-between;
+  /* border: 1px solid red; */
 }
 .players span {
-  border: 1px solid red;
-  position: relative;
-  z-index: 2;
   color: #56baed;
   font-size: 20px;
   font-weight: 500;
@@ -119,37 +155,11 @@ body {
   user-select: none;
   transition: all 0.3 ease;
 }
-/* .players.active span:first-child {
-  color: #fff;
-} */
-/* .players.active span:last-child {
-  color: #56baed;
-} */
 
-.players span:first-child {
+.players .xTurn.active,
+.players .oTurn.active {
+  background-color: #56baed;
   color: #fff;
-}
-/* when player select O it'll be active */
-.players.active span:first-child {
-  color: #56baed;
-}
-.players.active span:nth-child(2) {
-  color: #fff;
-}
-
-.players .slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: #56baed;
-  /* background-color: red; */
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
-.players.active .slider {
-  left: 50%;
 }
 
 .play-area {
@@ -157,50 +167,120 @@ body {
 }
 .play-area section {
   display: flex;
-  /* margin-bottom: 1px; */
 }
 .play-area section span {
-  display: block;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  display: grid;
+  place-items: center;
   height: 90px;
   width: 90px;
   margin: 2px;
   color: #56baed;
   font-size: 40px;
-  line-height: 80px;
-  text-align: center;
   border-radius: 5px;
   background: #fff;
 }
 
-.result-box {
+.result-box,
+.coming {
   padding: 25px 20px;
   border-radius: 5px;
-  max-width: 400px;
-  width: 100%;
   opacity: 0;
   text-align: center;
-  background: #fff;
+  min-width: 250px;
+  background: rgba(51, 170, 51, 0.5);
   pointer-events: none;
   transform: translate(-50%, -50%) scale(0.9);
 }
-.result-box.show {
+
+.result-box.lose {
+  background: rgba(255, 0, 0, 0.5);
+}
+
+.result-box.show,
+.coming.show {
   opacity: 1;
   pointer-events: auto;
   transform: translate(-50%, -50%) scale(1);
+  font-weight: 500;
 }
 .result-box .won-text {
-  font-size: 30px;
-  font-weight: 500;
+  font-size: 25px;
   display: flex;
   justify-content: center;
+  opacity: 1;
 }
 .result-box .won-text p {
+  opacity: 1;
   font-weight: 600;
   margin: 0 5px;
 }
-.result-box .btn {
+
+.result-box button {
   width: 100%;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  padding: 6px 3px;
   margin-top: 25px;
   display: flex;
   justify-content: center;
+  background-color: green;
+  border: none;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.result-box.lose button {
+  background-color: red;
+}
+
+small.helperText {
+  display: none;
+  color: green;
+  margin-top: 4px;
+  font-size: 12px;
+}
+small.helperText.active {
+  display: block;
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.header {
+  color: #56baed;
+  display: flex;
+  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.play-board .header {
+  color: #fff;
+}
+.header .setting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 15px;
+}
+
+.play-board .quit {
+  padding: 4px 10px;
+  background-color: red;
+  color: #fff;
+  border: none;
+  font-size: 12px;
+  outline: none;
+  border-radius: 15px;
 }
