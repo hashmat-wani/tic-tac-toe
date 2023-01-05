@@ -107,8 +107,7 @@ selectBoardSize.addEventListener("change", (e) => {
 function startGame() {
   playBoardSound.classList.add(volume ? "fa-volume-high" : "fa-volume-xmark");
   volume && gameStartSound.play();
-  ox.classList.add("hide"); //hide select box
-
+  selectBox.classList.add("hide"); //hide select box
   playBoard.classList.add("show"); //show the playboard section
 
   for (let i = 0; i < cells.length; i++) {
@@ -165,7 +164,6 @@ function move(id, player) {
     return;
   }
   checkTie();
-  console.log("reached");
   playBoard.style.pointerEvents = "auto"; //add pointerEvents auto in playboard so user can again click on box
 }
 
@@ -313,8 +311,10 @@ homeSound.onclick = () => {
 
 let playBoardSound = document.querySelector(".playBoardSound");
 playBoardSound.onclick = () => {
-  homeSound.classList.add(volume ? "fa-volume-xmark" : "fa-volume-high");
-  homeSound.classList.remove(volume ? "fa-volume-high" : "fa-volume-xmark");
+  playBoardSound.classList.add(volume ? "fa-volume-xmark" : "fa-volume-high");
+  playBoardSound.classList.remove(
+    volume ? "fa-volume-high" : "fa-volume-xmark"
+  );
 
   !volume && new Audio("./files/soundOnOff.wav").play();
   localStorage.setItem("volume", !volume);

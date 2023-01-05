@@ -44,6 +44,7 @@ body {
   padding: 20px 25px 25px;
   border-radius: 5px;
   max-width: 400px;
+  width: 100%;
   width: calc(100% - 20px);
   opacity: 1;
 }
@@ -51,8 +52,6 @@ body {
   /* background-color: #56baed; */
   opacity: 0;
   pointer-events: none;
-}
-.select-box .content.hide {
 }
 
 .select-box .title {
