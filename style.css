@@ -26,6 +26,7 @@
   background: #56baed;
 }
 body {
+  /* min-height: 100vh; */
   background: #56baed;
 }
 .select-box,
@@ -45,7 +46,6 @@ body {
   border-radius: 5px;
   max-width: 400px;
   width: 100%;
-  width: calc(100% - 20px);
   opacity: 1;
 }
 .select-box.hide {
@@ -168,7 +168,7 @@ body {
   display: flex;
 }
 .play-area section span {
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: "Comic Sans MS", sans-serif;
   display: grid;
   place-items: center;
   height: 90px;
@@ -188,6 +188,7 @@ body {
   text-align: center;
   min-width: 250px;
   background: rgba(51, 170, 51, 0.5);
+
   pointer-events: none;
   transform: translate(-50%, -50%) scale(0.9);
 }
@@ -204,7 +205,7 @@ body {
   font-weight: 500;
 }
 .result-box .won-text {
-  font-size: 25px;
+  font-size: 26px;
   display: flex;
   justify-content: center;
   opacity: 1;
@@ -217,7 +218,7 @@ body {
 
 .result-box button {
   width: 100%;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   border-radius: 5px;
   outline: none;
@@ -282,4 +283,10 @@ small.helperText.active {
   font-size: 12px;
   outline: none;
   border-radius: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .select-box {
+    width: calc(100% - 20px);
+  }
 }
