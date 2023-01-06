@@ -1,23 +1,21 @@
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Tic Tac Toe Game</title>
-      <link rel="stylesheet" href="style.css" />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe Game</title>
+    <link rel="stylesheet" href="style.css" />
 
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      />
-      <script
-        src="https://kit.fontawesome.com/7213b39e3a.js"
-        crossorigin="anonymous"
-      ></script>
-    </head>
-    <body></body>
-  </html>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <script
+      src="https://kit.fontawesome.com/7213b39e3a.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
   <body>
     <div class="select-box">
       <div class="header">
@@ -34,7 +32,16 @@
           <button class="mode multiPlay">Play vs friend</button>
           <button class="mode onlinePlay">Play Online</button>
         </div>
+
         <div class="options">
+          <div>
+            <p class="small gray">Board</p>
+            <select class="board">
+              <option value="3">3x3 (classic)</option>
+              <option value="5">5x5 - Align 4 to win</option>
+            </select>
+          </div>
+
           <div class="singlePlayDashboard active">
             <div>
               <p class="small gray">Level</p>
@@ -47,19 +54,13 @@
             <div>
               <p class="small gray">Player</p>
               <select class="player">
-                <option value="X">Player - X</option>
-                <option value="O">Player - O</option>
+                <option value="X">X-Player</option>
+                <option value="O">O-Player</option>
               </select>
             </div>
           </div>
-          <div>
-            <p class="small gray">Board</p>
-            <select class="board">
-              <option value="3">3x3 (classic)</option>
-              <option value="5">5x5 - Align 4 to win</option>
-            </select>
-          </div>
         </div>
+
         <small class="helperText active"
           >Hint: Select X if you wanna go first
         </small>
@@ -90,31 +91,90 @@
         <div class="players">
           <span class="xTurn active">X's Turn</span>
           <span class="oTurn">O's Turn</span>
-          <!-- <div class="slider active"></div> -->
         </div>
       </div>
-      <div class="play-area">
+      <div class="play-area three active">
         <section>
-          <span class="box1" id="0"></span>
-          <span class="box2" id="1"></span>
-          <span class="box3" id="2"></span>
+          <span class="_" id="0"></span>
+          <span class="_" id="1"></span>
+          <span class="_" id="2"></span>
         </section>
         <section>
-          <span class="box4" id="3"></span>
-          <span class="box5" id="4"></span>
-          <span class="box6" id="5"></span>
+          <span class="_" id="3"></span>
+          <span class="_" id="4"></span>
+          <span class="_" id="5"></span>
         </section>
         <section>
-          <span class="box7" id="6"></span>
-          <span class="box8" id="7"></span>
-          <span class="box9" id="8"></span>
+          <span class="_" id="6"></span>
+          <span class="_" id="7"></span>
+          <span class="_" id="8"></span>
         </section>
+      </div>
+      <div class="play-area five">
+        <section>
+          <span class="_0"></span>
+          <span class="_1"></span>
+          <span class="_2"></span>
+          <span class="_3"></span>
+          <span class="_4"></span>
+        </section>
+        <section>
+          <span class="_5"></span>
+          <span class="_6"></span>
+          <span class="_7"></span>
+          <span class="_8"></span>
+          <span class="_9"></span>
+        </section>
+
+        <section>
+          <span class="_10"></span>
+          <span class="_11"></span>
+          <span class="_12"></span>
+          <span class="_13"></span>
+          <span class="_14"></span>
+        </section>
+        <section>
+          <span class="_15"></span>
+          <span class="_16"></span>
+          <span class="_17"></span>
+          <span class="_18"></span>
+          <span class="_19"></span>
+        </section>
+        <section>
+          <span class="_20"></span>
+          <span class="_21"></span>
+          <span class="_22"></span>
+          <span class="_23"></span>
+          <span class="_24"></span>
+        </section>
+      </div>
+
+      <div class="footer">
+        <div class="showLevel small">
+          Level:<i><strong> easy</strong></i>
+        </div>
+        <div class="showPlayerSign small">
+          <div class="you">
+            You:<i><strong> X</strong></i>
+          </div>
+          <div class="opponent">
+            Opponent:<i><strong> O</strong></i>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- result box -->
     <div class="result-box">
       <div class="won-text"></div>
+      <div>
+        <select class="player active">
+          <option value="" selected hidden>who plays first?</option>
+          <option value="X">I start first</option>
+          <option value="O">Opponent start first</option>
+        </select>
+      </div>
+
       <div class="btn"><button>Replay</button></div>
     </div>
 

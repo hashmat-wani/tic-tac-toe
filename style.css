@@ -66,21 +66,22 @@ body {
   justify-content: space-between;
   margin-top: 20px;
   font-size: 13px;
+  /* border: 1px solid red; */
 }
 
 /* .select-box .options > div {
   border: 1px solid red;
 } */
 
-.select-box .options > div:first-child {
+.select-box .options > div:last-child {
   display: none;
 }
-.select-box .options > div:first-child.active {
+.select-box .options > div:last-child.active {
   /* border: 1px solid blue; */
   display: block;
   display: flex;
   justify-content: space-between;
-  column-gap: 7px;
+  column-gap: 8px;
 }
 
 .select-box .credit {
@@ -224,16 +225,15 @@ body {
   outline: none;
   cursor: pointer;
   padding: 6px 3px;
-  margin-top: 25px;
   display: flex;
   justify-content: center;
-  background-color: green;
+  background: rgba(51, 170, 51, 0.7);
   border: none;
   color: #fff;
   transition: all 0.3s ease;
 }
 .result-box.lose button {
-  background-color: red;
+  background: rgba(255, 0, 0, 0.7);
 }
 
 small.helperText {
@@ -269,10 +269,12 @@ small.helperText.active {
   color: #fff;
 }
 .header .setting {
+  /* border: 1px solid red; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   column-gap: 15px;
+  cursor: pointer;
 }
 
 .play-board .quit {
@@ -283,10 +285,65 @@ small.helperText.active {
   font-size: 12px;
   outline: none;
   border-radius: 15px;
+  cursor: pointer;
+}
+
+.play-board .footer {
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.play-board .footer .small {
+  font-size: 12px;
+}
+.play-board .footer .showPlayerSign {
+  text-align: right;
+}
+
+.result-box .player.active {
+  margin: 10px auto;
+  display: block;
+  background: rgba(51, 170, 51, 0.7);
+  color: #fff;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 5px;
+  /* border: 1px solid red; */
+}
+
+.result-box.lose .player.active {
+  color: #fff;
+  background: rgba(255, 0, 0, 0.7);
+}
+
+.result-box .player {
+  display: none;
 }
 
 @media only screen and (max-width: 600px) {
   .select-box {
     width: calc(100% - 20px);
   }
+}
+
+.play-board .play-area.three {
+  display: none;
+}
+.play-board .play-area.three.active {
+  display: block;
+}
+
+.play-board .play-area.five {
+  display: none;
+}
+.play-board .play-area.five.active {
+  display: block;
+}
+
+.play-area.five section span {
+  height: 50px;
+  width: 50px;
+  margin: 2px;
+  font-size: 30px;
 }

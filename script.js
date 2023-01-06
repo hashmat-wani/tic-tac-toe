@@ -1,3 +1,6 @@
+// import board3x3 from "./components/3x3Board.js";
+// import board5x5 from "./components/5x5Board.js";
+
 //selecting all required elements
 const selectBox = document.querySelector(".select-box"),
   startBtn = document.querySelector(".start"),
@@ -15,11 +18,15 @@ const selectBox = document.querySelector(".select-box"),
   playBoard = document.querySelector(".play-board"),
   xTurn = playBoard.querySelector(".xTurn"),
   oTurn = playBoard.querySelector(".oTurn"),
-  cells = document.querySelectorAll("section span"),
+  // cells = document.querySelectorAll("section span"),
   resultBox = document.querySelector(".result-box"),
   wonText = resultBox.querySelector(".won-text"),
   replayBtn = resultBox.querySelector("button"),
-  close = document.querySelector(".material-icons.close");
+  close = document.querySelector(".material-icons.close"),
+  showLevel = document.querySelector(".play-board .showLevel"),
+  showPlayerSign = document.querySelector(".play-board .showPlayerSign"),
+  you = document.querySelector(".play-board .you strong"),
+  opponent = document.querySelector(".play-board .opponent strong");
 
 let xTurnSound = new Audio("./files/xTurn.wav");
 let oTurnSound = new Audio("./files/oTurn.wav");
@@ -29,6 +36,7 @@ let gameLoseSound = new Audio("./files/gameLose.wav");
 let gameTieSound = new Audio("./files/gameTie.wav");
 
 let orgBoard;
+let cells;
 let boardSize = 3;
 let gameMode = "single";
 let level = "easy";
@@ -38,7 +46,7 @@ let tie = null;
 let turn;
 let volume = JSON.parse(localStorage.getItem("volume")) ?? true;
 
-let winCombos = [
+let winCombos3 = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -49,6 +57,36 @@ let winCombos = [
   [6, 4, 2],
 ];
 
+let winCombos5 = [
+  [0, 1, 2, 3],
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [6, 7, 8, 9],
+  [10, 11, 12, 13],
+  [11, 12, 13, 14],
+  [10, 11, 12, 13],
+  [15, 16, 17, 18],
+  [16, 17, 18, 19],
+  [21, 22, 23, 24],
+  [0, 5, 10, 15],
+  [5, 10, 15, 20],
+  [1, 6, 11, 16],
+  [6, 11, 16, 21],
+  [2, 7, 12, 17],
+  [7, 12, 17, 22],
+  [3, 8, 13, 18],
+  [8, 13, 18, 23],
+  [4, 9, 14, 19],
+  [9, 14, 19, 24],
+  [0, 6, 12, 18],
+  [6, 12, 18, 24],
+  [1, 7, 13, 19],
+  [5, 11, 17, 23],
+  [4, 8, 12, 16],
+  [8, 12, 16, 20],
+  [3, 7, 11, 15],
+  [9, 13, 17, 21],
+];
 window.onload = () => {
   homeSound.classList.add(volume ? "fa-volume-high" : "fa-volume-xmark");
 };
@@ -62,6 +100,8 @@ singlePlay.onclick = () => {
   singlePlayDashboard.classList.add("active");
   helperText.classList.add("active");
   gameMode = "single";
+  showPlayerSign.style.display = "block";
+  document.querySelector(".result-box .player").classList.add("active");
 };
 multiPlay.onclick = () => {
   multiPlay.classList.add("active");
@@ -71,6 +111,8 @@ multiPlay.onclick = () => {
   helperText.classList.remove("active");
   gameMode = "multi";
   turn = "X";
+  showPlayerSign.style.display = "none";
+  document.querySelector(".result-box .player").classList.remove("active");
 };
 onlinePlay.onclick = () => {
   coming.classList.add("show");
@@ -88,45 +130,113 @@ document.querySelector(".quit").onclick = reload;
 
 selectLevel.addEventListener("change", (e) => {
   level = e.target.value;
-  console.log(level);
+  showLevel.textContent = `Level: ${level}`;
 });
 
 selectPlayer.addEventListener("change", (e) => {
   human = e.target.value;
   ai = human === "X" ? "O" : "X";
+  you.textContent = human;
+  opponent.textContent = ai;
 });
 
 selectBoardSize.addEventListener("change", (e) => {
-  if (e.target.value == 5) {
-    coming.classList.add("show");
-    selectBox.style.pointerEvents = "none";
+  boardSize = +e.target.value;
+  if (boardSize === 5) {
+    selectBox.querySelector(".options .level option[value='hard']").remove();
   } else {
-    boardSize = e.target.value;
+    let option = document.createElement("option");
+    option.text = "Hard";
+    option.value = "hard";
+    selectLevel.add(option);
   }
+  // console.log(typeof boardSize);
+  // if (e.target.value == 5) {
+
+  //   coming.classList.add("show");
+  //   selectBox.style.pointerEvents = "none";
+  // } else {
+  // }
 });
+
 function startGame() {
   playBoardSound.classList.add(volume ? "fa-volume-high" : "fa-volume-xmark");
   volume && gameStartSound.play();
   selectBox.classList.add("hide"); //hide select box
   playBoard.classList.add("show"); //show the playboard section
 
+  cells = document.querySelectorAll(
+    `.${boardSize === 3 ? "three" : "five"} span`
+  );
+
+  document
+    .querySelector(`.play-area.${boardSize === 3 ? "three" : "five"}`)
+    .classList.add("active");
+
+  document
+    .querySelector(`.play-area.${boardSize === 3 ? "five" : "three"}`)
+    .classList.remove("active");
+
   for (let i = 0; i < cells.length; i++) {
-    orgBoard = Array.from(Array(9).keys());
+    orgBoard = Array.from(Array(cells.length).keys());
     //add onclick attribute in all available span
     cells[i].addEventListener("click", clickedBox, false);
   }
+
+  // if (boardSize === 3) {
+  //   document.querySelector(".play-area.three").classList.add("active");
+  //   document.querySelector(".play-area.five").classList.remove("active");
+
+  //   cells = document.querySelectorAll(".three span");
+  //   // console.log(cells.length);
+
+  //   for (let i = 0; i < cells.length; i++) {
+  //     orgBoard = Array.from(Array(9).keys());
+  //     //add onclick attribute in all available span
+  //     cells[i].addEventListener("click", clickedBox, false);
+  //   }
+  // } else {
+  //   document.querySelector(".play-area.five").classList.add("active");
+  //   document.querySelector(".play-area.three").classList.remove("active");
+
+  //   cells = document.querySelectorAll(".five span");
+  //   // console.log(cells.length, cells);
+
+  //   for (let i = 0; i < cells.length; i++) {
+  //     orgBoard = Array.from(Array(25).keys());
+  //     //add onclick attribute in all available span
+  //     cells[i].addEventListener("click", clickedBox, false);
+  //   }
+  // }
   if (ai === "X") {
     setTimeout(() => {
-      move(bestMove(), ai);
+      move(
+        level === "easy"
+          ? easyMove()
+          : level === "medium"
+          ? medMove()
+          : bestMove(),
+        ai
+      );
     }, 0);
   }
 }
 
-function clickedBox(element) {
+function clickedBox(el) {
   if (gameMode === "single") {
-    move(element.target.id, human);
+    // if (boardSize === 3) {
+    move(boardSize === 3 ? el.target.id : getId(el), human);
+    // } else {
+    //   move(getId(el), human);
+    // }
   } else {
-    move(element.target.id, turn);
+    move(boardSize === 3 ? el.target.id : getId(el), turn);
+
+    // if (boardSize === 3) {
+    //   move(el.target.id, turn);
+    // } else {
+    //   move(getId(el), turn);
+    // }
     turn = turn === "X" ? "O" : "X";
   }
   if (gameMode === "single" && !tie && !checkWin(orgBoard, human)) {
@@ -146,7 +256,9 @@ function clickedBox(element) {
 }
 
 function move(id, player) {
+  // console.log(id, player);
   gameStartSound.pause();
+  gameStartSound.currentTime = 0;
   if (volume) player === "X" ? xTurnSound.play() : oTurnSound.play();
   cells[id].style.pointerEvents = "none";
   if (player === "X") {
@@ -157,7 +269,11 @@ function move(id, player) {
     xTurn.classList.add("active");
   }
   orgBoard[id] = player;
-  document.getElementById(id).innerText = player;
+  if (boardSize === 3) {
+    document.getElementById(id).innerText = player;
+  } else {
+    document.querySelector(`._${id}`).innerText = player;
+  }
   let winner = checkWin(orgBoard, player);
   if (winner) {
     gameOver(winner);
@@ -170,24 +286,44 @@ function move(id, player) {
 function checkWin(board, player) {
   let winner = null;
   let plays = board.reduce((a, e, i) => (e === player ? a.concat(i) : a), []);
-  for (let [i, win] of winCombos.entries()) {
-    if (win.every((el) => plays.indexOf(el) > -1)) {
-      winner = { i, player };
-      break;
+
+  if (boardSize === 3) {
+    for (let [i, win] of winCombos3.entries()) {
+      if (win.every((el) => plays.indexOf(el) > -1)) {
+        winner = { i, player };
+        break;
+      }
+    }
+  } else {
+    for (let [i, win] of winCombos5.entries()) {
+      if (win.every((el) => plays.indexOf(el) > -1)) {
+        winner = { i, player };
+        break;
+      }
     }
   }
   return winner;
 }
 
 function gameOver(winner) {
-  console.log(winner);
-  for (let i of winCombos[winner.i]) {
-    document.getElementById(i).style.color =
-      gameMode === "multi"
-        ? "green"
-        : winner.player === human
-        ? "green"
-        : "tomato";
+  if (boardSize === 3) {
+    for (let i of winCombos3[winner.i]) {
+      document.getElementById(i).style.color =
+        gameMode === "multi"
+          ? "green"
+          : winner.player === human
+          ? "green"
+          : "tomato";
+    }
+  } else {
+    for (let i of winCombos5[winner.i]) {
+      document.querySelector(`._${i}`).style.color =
+        gameMode === "multi"
+          ? "green"
+          : winner.player === human
+          ? "green"
+          : "tomato";
+    }
   }
   playBoard.style.pointerEvents = "none";
   if (gameMode === "multi") {
@@ -200,7 +336,6 @@ function gameOver(winner) {
 }
 
 function declareWinner(who) {
-  console.log(who);
   wonText.innerHTML = who;
 
   setTimeout(() => {
@@ -215,16 +350,98 @@ function declareWinner(who) {
   }, 500);
 }
 function easyMove() {
-  return emptySpaces()[0];
-}
-function medMove() {
   let availableSpots = emptySpaces();
   return availableSpots[Math.floor(Math.random() * availableSpots.length)]; //getting random index from array so bot will select random unselected box
 }
 
+function medMove() {
+  // console.log("medMove");
+  let availableSpots = emptySpaces();
+
+  if (boardSize === 5) {
+    let idx = medMoveLevels5(availableSpots, 3);
+    // console.log("5x5level3", idx);
+    if (idx !== false) return idx;
+
+    idx = medMoveLevels5(availableSpots, 2);
+    // console.log("5x5level2", idx);
+    if (idx !== false) return idx;
+
+    idx = medMoveLevels5(availableSpots, 1);
+    // console.log("5x5level1", idx);
+    if (idx !== false) return idx;
+  } else {
+    let idx = medMoveLevels3(availableSpots, 2);
+    console.log("3x3level2", idx);
+    if (idx !== false) return idx;
+
+    idx = medMoveLevels3(availableSpots, 1);
+    console.log("3x3level1", idx);
+    if (idx !== false) return idx;
+  }
+
+  // if (boardSize == 3) {
+  //   for (let box of availableSpots) {
+  //     for (let winCombo of winCombos3) {
+  //       if (winCombo.includes(box)) {
+  //         let winCount = 0;
+  //         let chaseCount = 0;
+  //         for (let el of winCombo) {
+  //           if (orgBoard[el] === ai) winCount++;
+  //           if (orgBoard[el] === human) chaseCount++;
+  //         }
+  //         console.log("winCount", winCount);
+  //         console.log("chaseCount", chaseCount);
+  //         if (winCount === 2) return box;
+  //         if (chaseCount === 2) return box;
+  //       }
+  //     }
+  //   }
+  // } else {
+  //   let idx = medMoveLevels(availableSpots, 3);
+  //   console.log("l3", idx);
+  //   if (idx !== false) return idx;
+  //   idx = medMoveLevels(availableSpots, 2);
+  //   console.log("l2", idx);
+
+  //   if (idx !== false) return idx;
+  //   idx = medMoveLevels(availableSpots, 1);
+  //   console.log("l1", idx);
+
+  //   if (idx !== false) return idx;
+  //   console.log("easyMoveTaken");
+  // }
+
+  // if (medMoveLevels(3)) return;
+  // console.log("inside 5");
+  // for (let box of availableSpots) {
+  //   // console.log(box);
+  //   for (let winCombo of winCombos5) {
+  //     if (winCombo.includes(box)) {
+  //       let winCount = 0;
+  //       let chaseCount = 0;
+  //       for (let el of winCombo) {
+  //         if (orgBoard[el] === ai) winCount++;
+  //         if (orgBoard[el] === human) chaseCount++;
+  //       }
+  //       console.log("winCount", winCount);
+  //       console.log("chaseCount", chaseCount);
+  //       if (winCount === 3) return box;
+  //       if (winCount === 2) return box;
+  //       if (winCount === 1) return box;
+  //       if (chaseCount === 3) return box;
+  //     }
+  //   }
+  // }
+
+  return easyMove();
+}
+
 function bestMove() {
+  console.log("bestMove");
   return minimax(orgBoard, ai).index;
 }
+
 function emptySpaces() {
   return orgBoard.filter((s) => typeof s === "number");
 }
@@ -295,7 +512,33 @@ function minimax(newBoard, player) {
   // return the chosen move (object) from the moves array
   return moves[bestMove];
 }
-replayBtn.onclick = reload;
+replayBtn.onclick = () => {
+  volume && gameStartSound.play();
+  document.querySelector(".result-box .player")[0].selected = true;
+  if (ai === "X") {
+    setTimeout(() => {
+      move(
+        level === "easy"
+          ? easyMove()
+          : level === "medium"
+          ? medMove()
+          : bestMove(),
+        ai
+      );
+    }, 0);
+  }
+  oTurn.classList.remove("active");
+  xTurn.classList.add("active");
+  resultBox.classList.remove("show", "lose");
+  tie = null;
+  for (let i = 0; i < cells.length; i++) {
+    orgBoard = Array.from(Array(cells.length).keys());
+    cells[i].style.color = "#56baed";
+    cells[i].textContent = null;
+    cells[i].style.pointerEvents = "auto";
+  }
+  playBoard.style.pointerEvents = "auto";
+};
 
 function reload() {
   window.location.reload();
@@ -320,3 +563,57 @@ playBoardSound.onclick = () => {
   localStorage.setItem("volume", !volume);
   volume = !volume;
 };
+
+document
+  .querySelector(".result-box .player")
+  .addEventListener("change", (e) => {
+    human = e.target.value;
+    ai = human === "X" ? "O" : "X";
+    you.textContent = human;
+    opponent.textContent = ai;
+  });
+
+function medMoveLevels5(availableSpots, level) {
+  for (let box of availableSpots) {
+    // console.log(box);
+    for (let winCombo of winCombos5) {
+      if (winCombo.includes(box)) {
+        let winCount = 0;
+        let chaseCount = 0;
+        for (let el of winCombo) {
+          if (orgBoard[el] === ai) winCount++;
+          if (orgBoard[el] === human) chaseCount++;
+        }
+        // console.log("winCount", winCount);
+        // console.log("chaseCount", chaseCount);
+        if (winCount === level) return box;
+        if (chaseCount === level) return box;
+      }
+    }
+  }
+  return false;
+}
+
+function medMoveLevels3(availableSpots, level) {
+  for (let box of availableSpots) {
+    for (let winCombo of winCombos3) {
+      if (winCombo.includes(box)) {
+        let winCount = 0;
+        let chaseCount = 0;
+        for (let el of winCombo) {
+          if (orgBoard[el] === ai) winCount++;
+          if (orgBoard[el] === human) chaseCount++;
+        }
+        // console.log("winCount", winCount);
+        // console.log("chaseCount", chaseCount);
+        if (winCount === level) return box;
+        if (chaseCount === level) return box;
+      }
+    }
+  }
+  return false;
+}
+
+function getId(element) {
+  return Number(element.target.className.slice(1));
+}
