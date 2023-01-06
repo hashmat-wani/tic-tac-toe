@@ -21,8 +21,7 @@
       <div class="header">
         <header>Tic Tac Toe</header>
         <div class="setting">
-          <i class="homeSound fa-solid"></i>
-          <!-- <i class="fa-solid fa-volume-high"></i> -->
+          <i class="sound homeSound fa-solid"></i>
         </div>
       </div>
       <div class="content">
@@ -82,9 +81,8 @@
       <div class="header">
         <header>Tic Tac Toe</header>
         <div class="setting">
-          <i class="playBoardSound fa-solid"></i>
+          <i class="sound playBoardSound fa-solid"></i>
           <button class="quit">Quit</button>
-          <!-- <i class="fa-solid fa-volume-high"></i> -->
         </div>
       </div>
       <div class="details">
@@ -95,19 +93,19 @@
       </div>
       <div class="play-area three active">
         <section>
-          <span class="_" id="0"></span>
-          <span class="_" id="1"></span>
-          <span class="_" id="2"></span>
+          <span id="0"></span>
+          <span id="1"></span>
+          <span id="2"></span>
         </section>
         <section>
-          <span class="_" id="3"></span>
-          <span class="_" id="4"></span>
-          <span class="_" id="5"></span>
+          <span id="3"></span>
+          <span id="4"></span>
+          <span id="5"></span>
         </section>
         <section>
-          <span class="_" id="6"></span>
-          <span class="_" id="7"></span>
-          <span class="_" id="8"></span>
+          <span id="6"></span>
+          <span id="7"></span>
+          <span id="8"></span>
         </section>
       </div>
       <div class="play-area five">
@@ -175,7 +173,10 @@
         </select>
       </div>
 
-      <div class="btn"><button>Replay</button></div>
+      <div class="btn">
+        <button class="replay">Replay</button>
+        <button class="quit">Quit</button>
+      </div>
     </div>
 
     <div class="coming">

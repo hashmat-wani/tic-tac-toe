@@ -306,9 +306,10 @@ small.helperText.active {
   display: block;
   background: rgba(51, 170, 51, 0.7);
   color: #fff;
-  padding: 3px 6px;
+  padding: 5px 10px;
   border: none;
   border-radius: 5px;
+  width: 100%;
   /* border: 1px solid red; */
 }
 
@@ -346,4 +347,17 @@ small.helperText.active {
   width: 50px;
   margin: 2px;
   font-size: 30px;
+}
+
+.btn {
+  display: flex;
+  /* border: 1px solid red; */
+  column-gap: 10px;
+}
+.result-box .quit {
+  flex: 1;
+  background: rgba(255, 0, 0, 0.7);
+}
+.result-box .replay {
+  flex: 2;
 }
