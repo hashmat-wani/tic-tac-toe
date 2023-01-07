@@ -30,13 +30,13 @@ This game has 3 levels, **Easy, Medium, hard**.
 
 - With the easy version, the **bot** chooses its move randomly.
 - With the medium version, the bot chooses its move following some steps in order:
-  - If a **bot** is at one move of winning, it chooses that move.
-  - If the **player** is at one move of winning, it chooses that move.
-  - Same as step 1, but if the bot is at two moves of winning.
-  - Same as step 3, but with **player**.
-  - Same as step 1, but if the bot is at three moves of winning.
-  - Same as step 5, but with **player**.
-  - **bot** goes for random move.
+  1.  If a **bot** is at one move of winning, it chooses that move.
+  2.  If the **player** is at one move of winning, it chooses that move.
+  3.  Same as step 1, but if the bot is at two moves of winning.
+  4.  Same as step 3, but with **player**.
+  5.  Same as step 1, but if the bot is at three moves of winning.
+  6.  Same as step 5, but with **player**.
+  7.  **bot** goes for random move.
 - With the hard version, I've implemented minimax algorithm
   - Like a professional chess player, this algorithm sees a few steps ahead and puts itself in the shoes of its opponent. It keeps playing ahead until it reaches a terminal arrangement of the board (terminal state) resulting in a tie, a win, or a loss. Once in a terminal state, the AI will assign an arbitrary positive score (+10) for a win, a negative score (-10) for a loss, or a neutral score (0) for a tie. At the same time, the algorithm evaluates the moves that lead to a terminal state based on the players’ turn. It will choose the move with maximum score when it is the AI’s turn and choose the move with the minimum score when it is the human player’s turn. Using this strategy, Minimax avoids losing to the human player.
 
