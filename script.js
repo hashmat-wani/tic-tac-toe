@@ -19,8 +19,7 @@ const selectBox = document.querySelector(".select-box"),
   wonText = resultBox.querySelector(".won-text"),
   replayBtn = resultBox.querySelector("button"),
   close = document.querySelector(".material-icons.close"),
-  showLevel = document.querySelector(".play-board .showLevel"),
-  showPlayerSign = document.querySelector(".play-board .showPlayerSign"),
+  showLevel = document.querySelector(".play-board .showLevel strong"),
   you = document.querySelector(".play-board .you strong"),
   opponent = document.querySelector(".play-board .opponent strong");
 
@@ -101,7 +100,7 @@ singlePlay.onclick = () => {
   singlePlayDashboard.classList.add("active");
   helperText.classList.add("active");
   gameMode = "single";
-  showPlayerSign.style.display = "block";
+  document.querySelector(".play-board .footer").style.display = "block";
   document.querySelector(".result-box .player").classList.add("active");
 };
 multiPlay.onclick = () => {
@@ -112,7 +111,7 @@ multiPlay.onclick = () => {
   helperText.classList.remove("active");
   gameMode = "multi";
   turn = "X";
-  showPlayerSign.style.display = "none";
+  document.querySelector(".play-board .footer").style.display = "none";
   document.querySelector(".result-box .player").classList.remove("active");
 };
 onlinePlay.onclick = () => {
@@ -131,7 +130,7 @@ document.querySelectorAll(".quit").forEach((el) => (el.onclick = reload));
 
 selectLevel.addEventListener("change", (e) => {
   level = e.target.value;
-  showLevel.textContent = `Level: ${level}`;
+  showLevel.textContent = level;
 });
 
 selectPlayer.addEventListener("change", (e) => {
@@ -214,7 +213,6 @@ function clickedBox(el) {
 }
 
 function move(id, player) {
-  // console.log(id, player);
   gameStartSound.pause();
   gameStartSound.currentTime = 0;
   if (volume) player === "X" ? xTurnSound.play() : oTurnSound.play();
